@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
     //   - SailfishApp::pathTo(QString) to get a QUrl to a resource file
     //
     // To display the view, call "show()" (will show fullscreen on device).
-//    qmlRegisterType<PlaylistEntry>("org.netbug.player", 1, 0, "PlaylistEntry");
+    qmlRegisterType<PlaylistEntry>("org.netbug.player", 1, 0, "PlaylistEntry");
 
     return SailfishApp::main(argc, argv);
 }

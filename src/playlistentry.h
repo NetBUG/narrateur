@@ -12,19 +12,19 @@ class PlaylistEntry : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(QVector<QString>* playFiles READ getPlayFiles NOTIFY playFilesChanged)
+    Q_PROPERTY(QVariantList playFiles READ getPlayFiles NOTIFY playFilesChanged)
     Q_PROPERTY(QString coverImagePath READ coverImagePath WRITE setCoverImage NOTIFY coverImageChanged)
     Q_PROPERTY(QString playText READ getPlayText WRITE setPlayText NOTIFY playTextChanged)
     Q_PROPERTY(int posFile READ posFile WRITE setPosFile NOTIFY posFileChanged)
     Q_PROPERTY(int posTime READ posTime WRITE setTimFile NOTIFY posTimeChanged)
-    Q_PROPERTY(QString dataDir READ dataDir NOTIFY dataDirChanged)  //+ notify(!)
+    Q_PROPERTY(QString dataDir READ dataDir WRITE setDataDir NOTIFY dataDirChanged)  //+ notify(!)
 
     Q_PROPERTY(QString cacheDir READ cacheDir NOTIFY cacheDirChanged)
 public:
     explicit PlaylistEntry(QObject *parent = 0);
     QString cacheDir();
     QString dataDir();
-    QVector<QString>* getPlayFiles();
+    QVariantList getPlayFiles();
     QString coverImagePath();
     QString getPlayText();
     int posFile();
@@ -32,6 +32,7 @@ public:
 
     void setPosFile(int);
     void setTimFile(int);
+    void setDataDir(QString dirPath);
     void setCoverImage(QString imagePath);
     void setPlayText(QString imagePath);
 
@@ -49,7 +50,7 @@ private:
     QString coverImage;
     QString playText;
     QString dataPath;
-    QVector<QString> *playFiles;
+    QVariantList playFiles;
     int pos_file;
     int pos_time;
 };

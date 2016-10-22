@@ -3,7 +3,7 @@ import Sailfish.Silica 1.0
 import QtMultimedia 5.0
 
 Page {
-    id: page
+    id: player_page
     MediaPlayer {
         id: player
         source: "/home/nemo/Videos/Default/Sailfish_OS_2.0.mp4"

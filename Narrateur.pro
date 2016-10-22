@@ -19,8 +19,6 @@ SOURCES += src/Narrateur.cpp \
 
 OTHER_FILES += qml/Narrateur.qml \
     qml/cover/CoverPage.qml \
-    qml/pages/FirstPage.qml \
-    qml/pages/SecondPage.qml \
     rpm/Narrateur.changes.in \
     rpm/Narrateur.spec \
     rpm/Narrateur.yaml \
@@ -41,4 +39,10 @@ TRANSLATIONS += translations/Narrateur-de.ts
 
 HEADERS += \
     src/playlistentry.h
+
+DISTFILES += \
+    qml/pages/PlayerPage.qml \
+    qml/pages/ListPage.qml \
+    qml/pages/SearchPage.qml \
+    qml/service/Dao.qml
 

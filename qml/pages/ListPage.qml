@@ -31,10 +31,14 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import QtMultimedia 5.0
+import "../service/"
 
 Page {
     id: page
 
+    Dao {
+        id: dao
+    }
     Video {
         source: ""
     }

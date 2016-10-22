@@ -2,24 +2,46 @@
 <!DOCTYPE TS>
 <TS version="2.1">
 <context>
+    <name>BookItem</name>
+    <message>
+        <source>Add to Play Queue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rename</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove from list</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CoverPage</name>
     <message>
-        <source>My Cover</source>
+        <source>No book played</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FolderView</name>
+    <message>
+        <source>Select root folder</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ListPage</name>
     <message>
-        <source>Show Page 2</source>
+        <source>Show Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>UI Template</source>
+        <source>Add Book</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Hello Sailors</source>
+        <source>Scan Folder</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

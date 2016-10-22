@@ -40,43 +40,42 @@ Page {
         id: dao
     }
 
-    Video {
-        source: ""
-    }
-
     // To enable PullDownMenu, place our content in a SilicaFlickable
-    SilicaFlickable {
+    ListView {
         anchors.fill: parent
 
         // PullDownMenu and PushUpMenu must be declared in SilicaFlickable, SilicaListView or SilicaGridView
         PullDownMenu {
             MenuItem {
-                text: qsTr("Show Page 2")
-                onClicked: pageStack.push(Qt.resolvedUrl("SecondPage.qml"))
+                text: qsTr("Show Player")
+                onClicked: pageStack.push(Qt.resolvedUrl("PlayerPage.qml"))
+            }
+            MenuItem {
+                text: qsTr("Scan Folder")
+                onClicked: pageStack.push(Qt.resolvedUrl("FolderView.qml"))
+            }
+            MenuItem {
+                text: qsTr("Add Book")
+                onClicked: pageStack.push(Qt.resolvedUrl("AddPage.qml"))
             }
         }
 
         // Tell SilicaFlickable the height of its content.
-        contentHeight: column.height
+        contentHeight: parent.height
+        id: bookListView
 
-        // Place our content in a Column.  The PageHeader is always placed at the top
-        // of the page, followed by our content.
-        Column {
-            id: column
-
-            width: page.width
-            spacing: Theme.paddingLarge
-            PageHeader {
-                title: qsTr("UI Template")
-            }
-            Label {
-                x: Theme.paddingLarge
-                text: qsTr("Hello Sailors")
-                color: Theme.secondaryHighlightColor
-                font.pixelSize: Theme.fontSizeExtraLarge
-            }
+        model: ListModel {
+            id: bookList
         }
-    }
+
+        delegate: BookItem { }
+    }   //+ ListView
+
+    function populateBookList() {
+        dao.retrieveAllBooks();
+    }   //+ populateBookList
+
+    Component.onCompleted: populateBookList();
 }
 
 

@@ -44,5 +44,7 @@ DISTFILES += \
     qml/pages/PlayerPage.qml \
     qml/pages/ListPage.qml \
     qml/pages/SearchPage.qml \
-    qml/service/Dao.qml
+    qml/service/Dao.qml \
+    qml/pages/BookItem.qml \
+    qml/pages/FolderView.qml
 

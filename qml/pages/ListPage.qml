@@ -68,7 +68,7 @@ Page {
             id: bookList
         }
 
-        delegate: BookItem { }
+        delegate: BookItem { width: parent.width }
     }   //+ ListView
 
     function populateBookList() {

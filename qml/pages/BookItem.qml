@@ -4,8 +4,6 @@ import Sailfish.Silica 1.0
 import "functions.js" as UIFunctions
 
 ListItem {
-    width: parent.width
-    height: Theme.itemSizeMedium
     menu: ContextMenu {
         MenuItem {
             text: qsTr("Add to Play Queue")
@@ -14,7 +12,15 @@ ListItem {
         }
         MenuItem {
             text: qsTr("Rename")
-            onClicked: {//SirenSong.addToPlaylist(url)
+            onClicked: {
+                var dialog =
+                pageStack.push(Qt.resolvedUrl("RenameDialog.qml"),
+                    {"name": model.bookName});
+                dialog.accepted.connect(function() {
+                    model.bookName = dialog.name;
+                    dao.updateBookName(model.id, dialog.name)
+                    bookNameLs.text = dialog.name;
+                });
             }
         }
         MenuItem {
@@ -44,6 +50,7 @@ ListItem {
 
         Column {
             Label {
+                id: bookNameLs
                 text: model.bookName
                 font.pixelSize: Theme.fontSizeMedium
                 color: Theme.primaryColor

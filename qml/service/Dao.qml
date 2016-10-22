@@ -36,6 +36,18 @@ Item {
         });
     }
 
+    function updateBookName(id, str) {
+        database.transaction(function(tx) {
+            tx.executeSql("UPDATE BooksDatabase SET bookName = '"+str+"' WHERE id = " + id);
+        });
+    }
+
+    function removeBook(id) {
+        database.transaction(function(tx) {
+            tx.executeSql("DELETE FROM BooksDatabase WHERE id = " + id);
+        });
+    }
+
     function retrieveAllBooks(callback) {
         database.readTransaction(function(tx) {
             var result = tx.executeSql("SELECT * FROM BooksDatabase");

@@ -46,5 +46,6 @@ DISTFILES += \
     qml/pages/SearchPage.qml \
     qml/service/Dao.qml \
     qml/pages/BookItem.qml \
-    qml/pages/FolderView.qml
+    qml/pages/FolderView.qml \
+    qml/pages/RenameDialog.qml
 

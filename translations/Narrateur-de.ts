@@ -45,4 +45,19 @@
         <translation type="unfinished"></translation>
     </message>
 </context>
+<context>
+    <name>RenameDialog</name>
+    <message>
+        <source>Rename</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter page name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Page name</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
 </TS>

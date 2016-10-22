@@ -35,6 +35,10 @@ import QtMultimedia 5.0
 Page {
     id: page
 
+    Video {
+        source: ""
+    }
+
     // To enable PullDownMenu, place our content in a SilicaFlickable
     SilicaFlickable {
         anchors.fill: parent

@@ -12,25 +12,46 @@ class PlaylistEntry : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(QVector<QString> playFiles READ playFiles NOTIFY coverImageChanged)
-    Q_PROPERTY(QString coverImage READ coverImage WRITE setCoverImage NOTIFY coverImageChanged)
-    Q_PROPERTY(QString playText READ playText WRITE setPlayText NOTIFY playTextChanged)
-    Q_PROPERTY(QVector<QString>::Iterator posFile READ posFile WRITE posFile NOTIFY posFileChanged)
-    Q_PROPERTY(int posTime READ posTime WRITE TimFile NOTIFY posTimeChanged)
+    Q_PROPERTY(QVector<QString>* playFiles READ getPlayFiles NOTIFY playFilesChanged)
+    Q_PROPERTY(QString coverImagePath READ coverImagePath WRITE setCoverImage NOTIFY coverImageChanged)
+    Q_PROPERTY(QString playText READ getPlayText WRITE setPlayText NOTIFY playTextChanged)
+    Q_PROPERTY(int posFile READ posFile WRITE setPosFile NOTIFY posFileChanged)
+    Q_PROPERTY(int posTime READ posTime WRITE setTimFile NOTIFY posTimeChanged)
     Q_PROPERTY(QString dataDir READ dataDir NOTIFY dataDirChanged)  //+ notify(!)
 
-    Q_PROPERTY(QString writableDir READ writableDir NOTIFY writableDirChanged)
     Q_PROPERTY(QString cacheDir READ cacheDir NOTIFY cacheDirChanged)
 public:
-    explicit PLAYLISTENTRY(QObject *parent = 0);
+    explicit PlaylistEntry(QObject *parent = 0);
     QString cacheDir();
     QString dataDir();
-    QString writableDir();
+    QVector<QString>* getPlayFiles();
+    QString coverImagePath();
+    QString getPlayText();
+    int posFile();
+    int posTime();
+
+    void setPosFile(int);
+    void setTimFile(int);
+    void setCoverImage(QString imagePath);
+    void setPlayText(QString imagePath);
+
 signals:
     void cacheDirChanged();
     void dataDirChanged();
-    void writableDirChanged();
+    void coverImageChanged();
+    void playFilesChanged();
+    void playTextChanged();
+    void posFileChanged();
+    void posTimeChanged();
 public slots:
+
+private:
+    QString coverImage;
+    QString playText;
+    QString dataPath;
+    QVector<QString> *playFiles;
+    int pos_file;
+    int pos_time;
 };
 
 #endif // PLAYLISTENTRY_H

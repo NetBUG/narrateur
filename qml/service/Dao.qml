@@ -5,31 +5,36 @@ Item {
     property var database
 
     Component.onCompleted: {
-        database = LocalStorage.openDatabaseSync("MessageDatabase", "1.0",
-            "Database to store messages", 1000000);
+        database = LocalStorage.openDatabaseSync("BooksDatabase", "1.0",
+            "Database to store active books", 1000000);
         database.transaction(function(tx) {
-            tx.executeSql("CREATE TABLE IF NOT EXISTS MessageDatabase(
-                 id INTEGER PRIMARY KEY,
-                 message TEXT)");
+            tx.executeSql("CREATE TABLE IF NOT EXISTS BooksDatabase(
+                 id INTEGER PRIMARY KEY, file_pos INTEGER, time_pos INTEGER,
+                  TEXT)");
+        });
+        database.transaction(function(tx) {
+            tx.executeSql("CREATE TABLE IF NOT EXISTS BooksPositions(
+                 id INTEGER PRIMARY KEY, file_pos INTEGER, time_pos INTEGER,
+                  TEXT)");
         });
     }
 
-    function addMessage(message) {
+    function addBook(book) {
         database.transaction(function(tx) {
-            tx.executeSql("INSERT INTO MessageDatabase(message) VALUES(?)", [message]);
+            tx.executeSql("INSERT INTO BooksDatabase(book) VALUES(?)", [book]);
         });
     }
 
-    function retrieveAllMessages(callback) {
+    function retrieveAllBooks(callback) {
         database.readTransaction(function(tx) {
-            var result = tx.executeSql("SELECT * FROM MessageDatabase");
+            var result = tx.executeSql("SELECT * FROM BooksDatabase");
             callback(result.rows);
         });
     }
 
-    function clearMessages() {
+    function clearBooks() {
         database.transaction(function(tx) {
-            tx.executeSql("DELETE FROM MessageDatabase");
+            tx.executeSql("DELETE FROM BookDatabase");
         });
     }
 }

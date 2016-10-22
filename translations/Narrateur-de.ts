@@ -9,18 +9,18 @@
     </message>
 </context>
 <context>
-    <name>FirstPage</name>
+    <name>ListPage</name>
     <message>
         <source>Show Page 2</source>
-        <translation>Zur Seite 2</translation>
+        <translation type="unfinished">Zur Seite 2</translation>
     </message>
     <message>
         <source>UI Template</source>
-        <translation>UI-Vorlage</translation>
+        <translation type="unfinished">UI-Vorlage</translation>
     </message>
     <message>
         <source>Hello Sailors</source>
-        <translation>Hallo Matrosen</translation>
+        <translation type="unfinished">Hallo Matrosen</translation>
     </message>
 </context>
 </TS>

@@ -9,7 +9,7 @@
     </message>
 </context>
 <context>
-    <name>FirstPage</name>
+    <name>ListPage</name>
     <message>
         <source>Show Page 2</source>
         <translation type="unfinished"></translation>

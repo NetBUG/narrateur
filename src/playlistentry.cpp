@@ -7,6 +7,7 @@
 
 PlaylistEntry::PlaylistEntry(QObject *parent) : QObject(parent)
 {
+    this->player = new QMediaPlayer();
 }
 
 QString PlaylistEntry::dataDir() {
@@ -80,9 +81,9 @@ QList<QVariant> PlaylistEntry::scanMusic(QString path) {
             continue;
         if (fn.endsWith(".mp3") || fn.endsWith(".ogg"))
         {
-            lsOut->append(fn);
+            lsOut->append(path + fn);
             try {
-                player->setMedia(QUrl::fromLocalFile(fn));
+                player->setMedia(QUrl::fromLocalFile(path + fn));
                 this->total_length += player->duration() / 1000;
             } catch(...) {
                 qDebug("Error reading file length");
@@ -103,16 +104,14 @@ void PlaylistEntry::setDataDir(QString dirPath) {
     } else {
         QDirIterator it(this->dataPath);
         while (it.hasNext()) {
-            qDebug() << "Scanning... ";
             QString fn = it.next();
-            qDebug()  << fn;
             QFileInfo dir(fn);
             if (!dir.isDir()) continue;
-            qDebug() << "Adding... " << fn;
             if (checkMusic(fn) && findImage(fn) != "") {
                 this->playFiles.append(fn);
                 qDebug() << "Added book dir: " << fn;
             }
+
         }
     }
 }

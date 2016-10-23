@@ -52,7 +52,7 @@ Dialog {
        //~ checking the folder for being a book itself
        var im = bookEntry.coverImagePath
        var m = bookEntry.playFiles
-       var outpath = bookEntry.dataDir
+       var outpath = path
        var bn = bookEntry.name
        console.log("Cover: " + im + ', music: ' + m)
        if (im.length > 0 && m.length > 0)

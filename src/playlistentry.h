@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QString>
 #include <QVariantMap>
+#include <QtMultimedia/QMediaPlayer>
 
 /**
  * @brief The PLAYLISTENTRY class provides information about
@@ -40,6 +41,7 @@ public:
     void setDataDir(QString dirPath);
     void setCoverImage(QString imagePath);
     void setPlayText(QString imagePath);
+    QMediaPlayer* player;
 
 signals:
     void cacheDirChanged();

@@ -30,23 +30,26 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import QtMultimedia 5.0
 
 CoverBackground {
     Label {
-        id: label
+        id: coverLabel
         anchors.centerIn: parent
         text: qsTr("No book played")
     }
+    property var playing: mainPlayer.playbackState === MediaPlayer.PlayingState
 
     CoverActionList {
         id: coverAction
 
-        CoverAction {
-            iconSource: "image://theme/icon-cover-next"
-        }
+        //CoverAction {
+        //    iconSource: "image://theme/icon-cover-next"
+        //}
 
         CoverAction {
-            iconSource: "image://theme/icon-cover-pause"
+            iconSource: playing ? "image://theme/icon-cover-pause" : "image://theme/icon-cover-play"
+            onTriggered: playing ? mainPlayer.pause() : mainPlayer.play()
         }
     }
 }

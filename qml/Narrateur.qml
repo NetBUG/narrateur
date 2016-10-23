@@ -30,14 +30,27 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import QtMultimedia 5.0
+import Sailfish.Media 1.0
 import "pages"
 
 ApplicationWindow
 {
-    initialPage: Component { ListPage { } }
+    initialPage: Component { ListPage {  } }
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
     allowedOrientations: Orientation.All
     _defaultPageOrientations: Orientation.All
+
+    Video {
+        id: mainPlayer
+        property var seekpos;
+        onSeekableChanged: {
+            if (!mainPlayer.seekable) return;
+            console.log("Seeking to " + seekpos + " " + mainPlayer.seekable)
+            mainPlayer.seek(seekpos);
+        }
+
+    }
 }
 
 

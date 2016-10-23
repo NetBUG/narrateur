@@ -72,6 +72,7 @@ Page {
     }   //+ ListView
 
     function populateBookList() {
+        console.log(mainPlayer)
         dao.retrieveAllBooks();
     }   //+ populateBookList
 

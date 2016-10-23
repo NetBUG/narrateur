@@ -50,6 +50,7 @@ ApplicationWindow
         id: mainPlayer
         property var seekpos;
         property var bookid;
+        property var bookName;
         property bool isPlaying: mainPlayer.playbackState === MediaPlayer.PlayingState
         onSeekableChanged: {
             if (!mainPlayer.seekable) return;
@@ -65,6 +66,9 @@ ApplicationWindow
                 dao.updateFile(bookid, mainPlayer.source, mainPlayer.position);
         }
 
+    }
+    Component.onCompleted: {
+        mainPlayer.bookName = qsTr("No book playing")
     }
 }
 

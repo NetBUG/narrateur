@@ -36,7 +36,7 @@ CoverBackground {
     Label {
         id: coverLabel
         anchors.centerIn: parent
-        text: qsTr("No book played")
+        text: mainPlayer.bookName
     }
     property var playing: mainPlayer.playbackState === MediaPlayer.PlayingState
 

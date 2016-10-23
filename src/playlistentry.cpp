@@ -5,10 +5,16 @@
 #include <QDir>
 #include <QDirIterator>
 #include <QtMultimedia/QMediaPlayer>
+#include <QtDBus>
+
+void initializeDbus() {
+    QDBusInterface * dbusVolume = new QDBusInterface("com.Meego.MainVolume2", "/com/meego/mainvolume2", "com.Meego.MainVolume2" );
+}
 
 PlaylistEntry::PlaylistEntry(QObject *parent) : QObject(parent)
 {
     this->player = new QMediaPlayer();
+    initializeDbus();
 }
 
 QString PlaylistEntry::dataDir() {

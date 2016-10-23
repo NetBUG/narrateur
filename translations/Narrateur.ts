@@ -17,13 +17,6 @@
     </message>
 </context>
 <context>
-    <name>CoverPage</name>
-    <message>
-        <source>No book played</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>FolderView</name>
     <message>
         <source>Select root folder</source>
@@ -42,6 +35,13 @@
     </message>
     <message>
         <source>Import from YouTube</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Narrateur</name>
+    <message>
+        <source>No book playing</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

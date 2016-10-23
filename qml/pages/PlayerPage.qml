@@ -54,6 +54,7 @@ Page {
     function loaded(fn, update) {
         mainPlayer.stop()
         mainPlayer.source = fn
+        mainPlayer.bookName = fn.substring(10)
         if (update) dao.updateFile(bookid, mainPlayer.source, mainPlayer.position);
         book = dao.getFile(bookid)
         mainPlayer.seekpos = book[3]

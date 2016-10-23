@@ -33,6 +33,7 @@ import Sailfish.Silica 1.0
 import QtMultimedia 5.0
 import Sailfish.Media 1.0
 import "pages"
+import "service"
 
 ApplicationWindow
 {
@@ -41,13 +42,27 @@ ApplicationWindow
     allowedOrientations: Orientation.All
     _defaultPageOrientations: Orientation.All
 
+    Dao {
+        id: dao
+    }
+
     Video {
         id: mainPlayer
         property var seekpos;
+        property var bookid;
+        property bool isPlaying: mainPlayer.playbackState === MediaPlayer.PlayingState
         onSeekableChanged: {
             if (!mainPlayer.seekable) return;
+            if (seekpos < 0) return;
             console.log("Seeking to " + seekpos + " " + mainPlayer.seekable)
             mainPlayer.seek(seekpos);
+            seekpos = -1;
+        }
+        onPlaybackStateChanged: {
+            //mainPlayer.seekpos = mainPlayer.position;
+            if (bookid !== undefined && mainPlayer.position > 0)
+//                if (!isPlaying)
+                dao.updateFile(bookid, mainPlayer.source, mainPlayer.position);
         }
 
     }

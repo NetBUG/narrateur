@@ -46,17 +46,28 @@ Item {
         }
     }
 
+    //+ TODO
+    function getBookInfo(id) {
+        var ci = ""
+        var pt = ""
+        database.readTransaction(function(tx) {
+            var result = tx.executeSql("SELECT * FROM BooksDatabase WHERE id = '" + id + "';")
+          //  console.log("Image: " + result.rows.item(0).coverImage)
+            ci = result.rows.item(0).coverImage
+            pt = result.rows.item(0).playText
+        });
+        return [ci, pt]
+    }
+
     //+ @brief returns current file according to list
     function getFile(id) {
         var filepos = -1;
         var timepos = -1;
         database.readTransaction(function(tx) {
             var result = tx.executeSql("SELECT * FROM BooksPositions WHERE book_id = '" + id + "';")
-            console.log("Positions found: " + result.rows.length)
             if (result.rows.length > 0) {
                 filepos = result.rows.item(0).file_pos;
                 timepos = result.rows.item(0).time_pos;
-                console.log("Loaded time pos:" + timepos)
             }
         });
         var prevFile = ""
@@ -65,11 +76,11 @@ Item {
         database.readTransaction(function(tx) {
             var result = tx.executeSql("SELECT * FROM FilesDatabase WHERE book_id = '" + id + "';")
             if (result.rows.length > 0) {
-                console.log("Found " + result.rows.length + " files...")
+         //       console.log("Found " + result.rows.length + " files...")
                 curFile = 0
                 for (var i = 0; i < result.rows.length; i++)
-                    if(result.rows.item(curFile).id === filepos)
-                        curFile = i
+                    if(result.rows.item(i).id == filepos)
+                        curFile = i;
                 prevFile = result.rows.item(curFile > 0 ? curFile - 1 : result.rows.length - 1).path
                 nextFile = result.rows.item(curFile + 1 < result.rows.length ? curFile + 1 : 0).path
                 curFile = result.rows.item(curFile).path;
@@ -78,14 +89,15 @@ Item {
         if (timepos < 0) timepos = 0
         return [prevFile, curFile, nextFile, timepos]
     }
+
     function updateFile(id, curFile, position) {
-        console.log("Writing new state of the file: " + id + " : " + curFile + " @ " + position)
         var fID = -1
         database.readTransaction(function(tx) {
             var result = tx.executeSql("SELECT * FROM FilesDatabase WHERE book_id = '" + id + "';")
-            for (var i = 0; i < result.rows.length; i++)
-                if(result.rows.item(i).path === curFile) fID = i
+            for (var i = 0; i < result.rows.length; i++){
+                if(("file://" + result.rows.item(i).path) == curFile) fID = result.rows.item(i).id}
         });
+        console.log("New book " + id + " state: " + curFile + " ("+fID+") @ " + position)
         database.transaction(function(tw) {
             tw.executeSql("UPDATE BooksPositions SET file_pos = "+ fID +"  WHERE book_id = " + id + ";");
             tw.executeSql("UPDATE BooksPositions SET time_pos = "+position + " WHERE book_id = " + id + ";");
@@ -102,16 +114,17 @@ Item {
         console.log("Removing book " + id)
         database.transaction(function(tx) {
             tx.executeSql("DELETE FROM BooksDatabase WHERE id = " + id);
+            tx.executeSql("DELETE FROM FilesDatabase WHERE book_id = " + id);
+            tx.executeSql("DELETE FROM BooksPositions WHERE book_id = " + id);
         });
     }
 
     function retrieveAllBooks(callback) {
-        bookList.clear()
         database.readTransaction(function(tx) {
             var result = tx.executeSql("SELECT * FROM BooksDatabase");
             for(var i = 0; i < result.rows.length; i++) {
                 var message = result.rows.item(i);
-                bookList.append(message);
+                callback(message);
             }
         });
     }

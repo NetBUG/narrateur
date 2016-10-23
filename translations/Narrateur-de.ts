@@ -33,15 +33,15 @@
 <context>
     <name>ListPage</name>
     <message>
-        <source>Show Player</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Add Book</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Scan Folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import from YouTube</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

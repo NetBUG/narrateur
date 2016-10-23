@@ -36,10 +36,6 @@ import "../service/"
 Page {
     id: page
 
-    Dao {
-        id: dao
-    }
-
     // To enable PullDownMenu, place our content in a SilicaFlickable
     ListView {
         anchors.fill: parent
@@ -47,12 +43,12 @@ Page {
         // PullDownMenu and PushUpMenu must be declared in SilicaFlickable, SilicaListView or SilicaGridView
         PullDownMenu {
             MenuItem {
-                text: qsTr("Show Player")
-                onClicked: pageStack.push(Qt.resolvedUrl("PlayerPage.qml"), {dao: dao})
+                text: qsTr("Import from YouTube")
+                //onClicked: pageStack.push(Qt.resolvedUrl("PlayerPage.qml"))
             }
             MenuItem {
                 text: qsTr("Scan Folder")
-                onClicked: pageStack.push(Qt.resolvedUrl("FolderView.qml"), {dao: dao, listPage: page})
+                onClicked: pageStack.push(Qt.resolvedUrl("FolderView.qml"), { listPage: page })
             }
             MenuItem {
                 text: qsTr("Add Book")
@@ -72,8 +68,8 @@ Page {
     }   //+ ListView
 
     function populateBookList() {
-        console.log(mainPlayer)
-        dao.retrieveAllBooks();
+        bookList.clear()
+        dao.retrieveAllBooks(function(message) {bookList.append(message);});
     }   //+ populateBookList
 
     Component.onCompleted: populateBookList();

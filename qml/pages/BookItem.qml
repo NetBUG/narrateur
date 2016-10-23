@@ -19,7 +19,7 @@ ListItem {
                     {"name": model.bookName});
                 dialog.accepted.connect(function() {
                     model.bookName = dialog.name;
-                    itdao.updateBookName(model.id, dialog.name)
+                    dao.updateBookName(model.id, dialog.name)
                     bookNameLs.text = dialog.name;
                 });
             }
@@ -27,8 +27,7 @@ ListItem {
         MenuItem {
             text: qsTr("Remove from list")
             onClicked: {
-                itdao.removeBook(model.id)
-                listPage.update()
+                dao.removeBook(model.id)
                 listPage.populateBookList()
             }
         }
@@ -38,7 +37,7 @@ ListItem {
         console.log("Playing book " + model.id)
         var playerPage = Qt.resolvedUrl("PlayerPage.qml")
 //        if (!pageStack.contains(playerPage)) {
-            pageStack.push(playerPage, {dao: itdao, bookid: model.id})
+            pageStack.push(playerPage, { bookid: model.id })
 //        } else {
 //            pageStack.navigateForward(PageStackAction.Animated)
 //        }

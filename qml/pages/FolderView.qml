@@ -6,7 +6,6 @@ import "../service"
 
 Dialog {
   id: folderView
-  property var dao;
   property var listPage;
 
   PlaylistEntry {

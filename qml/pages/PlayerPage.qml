@@ -7,12 +7,15 @@ Page {
     id: player_page
     property var bookid;
     property var dao;
+    property var book;
+    property var seekpos;
 
     Video {
         id: player
-        Component.onUrlChanged: {
-            console.log("Test if new file loading triggers this event...")
-            dao.updateFile(bookid, player.source, player.position / 1000);
+        onSeekableChanged: {
+            if (!player.seekable) return;
+            console.log("Seeking to " + seekpos + " " + player.seekable)
+            player.seek(seekpos);
         }
     }
 
@@ -20,19 +23,23 @@ Page {
         id: audioPlayer
         active: true
         open: true
-        //playing: player.isPlaying
+        playing: player.playbackState == MediaPlayer.PlayingState
         //author: player.author
         //title: player.title
-        duration: player.duration   //? / 1000?
+        duration: player.duration / 1000
         position: player.position / 1000
 
         onPlayPauseClicked: {
-            if (playing) player.pause()
+            if (playing) {
+                seekpos = player.position;
+                dao.updateFile(bookid, player.source, player.position);
+                player.pause()
+            }
             else player.play()
         }
-        onPreviousClicked: if (player.currentIndex > 0) player.prev()
-        onNextClicked: if (player.currentIndex < player.size-1) player.next()
-        onSliderReleased: player.seek(value)
+        onPreviousClicked: {player.source = book[0]; dao.updateFile(bookid, player.source, player.position); book = dao.getFile(bookid)}
+        onNextClicked: {player.source = book[2]; dao.updateFile(bookid, player.source, player.position); book = dao.getFile(bookid)}
+        onSliderReleased: player.seek(value * 1000)
         onRepeatClicked: {
             player.repeat = !player.repeat
             repeat = player.repeat ? MediaPlayerControls.RepeatTrack :
@@ -46,11 +53,13 @@ Page {
     }
 
     Component.onCompleted: {
-        var book = dao.getFile(bookid);
-        console.log("Previous file: " + book[0])
+        book = dao.getFile(bookid);
+        seekpos = book[3];
+        //console.log("Previous file: " + book[0])
         console.log("Current file: " + book[1])
         console.log("Next file: " + book[2])
-        player.source = book[3]
+        player.source = book[1]
+        player.play()
     }
 }
 

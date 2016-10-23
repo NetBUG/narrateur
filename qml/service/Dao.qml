@@ -52,9 +52,11 @@ Item {
         var timepos = -1;
         database.readTransaction(function(tx) {
             var result = tx.executeSql("SELECT * FROM BooksPositions WHERE book_id = '" + id + "';")
+            console.log("Positions found: " + result.rows.length)
             if (result.rows.length > 0) {
                 filepos = result.rows.item(0).file_pos;
                 timepos = result.rows.item(0).time_pos;
+                console.log("Loaded time pos:" + timepos)
             }
         });
         var prevFile = ""
@@ -63,16 +65,13 @@ Item {
         database.readTransaction(function(tx) {
             var result = tx.executeSql("SELECT * FROM FilesDatabase WHERE book_id = '" + id + "';")
             if (result.rows.length > 0) {
-                console.log("FOund " + result.rows.length + " files...")
+                console.log("Found " + result.rows.length + " files...")
                 curFile = 0
                 for (var i = 0; i < result.rows.length; i++)
-                {
-                    if(result.rows.item(i).id === filepos)
-                        curfile = i
-                }
-                if (curFile + 1 < result.rows.length)
-                    nextFile = result.rows.item(curFile + 1).path;
-                else nextFile = result.rows.item(0).path;
+                    if(result.rows.item(curFile).id === filepos)
+                        curFile = i
+                prevFile = result.rows.item(curFile > 0 ? curFile - 1 : result.rows.length - 1).path
+                nextFile = result.rows.item(curFile + 1 < result.rows.length ? curFile + 1 : 0).path
                 curFile = result.rows.item(curFile).path;
             }
         });
@@ -80,7 +79,17 @@ Item {
         return [prevFile, curFile, nextFile, timepos]
     }
     function updateFile(id, curFile, position) {
-        //~ TODO
+        console.log("Writing new state of the file: " + id + " : " + curFile + " @ " + position)
+        var fID = -1
+        database.readTransaction(function(tx) {
+            var result = tx.executeSql("SELECT * FROM FilesDatabase WHERE book_id = '" + id + "';")
+            for (var i = 0; i < result.rows.length; i++)
+                if(result.rows.item(i).path === curFile) fID = i
+        });
+        database.transaction(function(tw) {
+            tw.executeSql("UPDATE BooksPositions SET file_pos = "+ fID +"  WHERE book_id = " + id + ";");
+            tw.executeSql("UPDATE BooksPositions SET time_pos = "+position + " WHERE book_id = " + id + ";");
+        });
     }
 
     function updateBookName(id, str) {

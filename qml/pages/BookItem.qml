@@ -4,6 +4,7 @@ import Sailfish.Silica 1.0
 import "functions.js" as UIFunctions
 
 ListItem {
+    id: bookIt
     menu: ContextMenu {
         MenuItem {
             text: qsTr("Add to Play Queue")
@@ -18,23 +19,31 @@ ListItem {
                     {"name": model.bookName});
                 dialog.accepted.connect(function() {
                     model.bookName = dialog.name;
-                    dao.updateBookName(model.id, dialog.name)
+                    itdao.updateBookName(model.id, dialog.name)
                     bookNameLs.text = dialog.name;
                 });
             }
         }
         MenuItem {
             text: qsTr("Remove from list")
-            onClicked: {//SirenSong.addToPlaylist(url)
+            onClicked: {
+                itdao.removeBook(model.id)
+                listPage.update()
+                listPage.populateBookList()
             }
         }
     }
 
     onClicked: {
-        //~ SirenSong.play(url)
-        if (libraryPage.forwardNavigation) {
-            pageStack.navigateForward(PageStackAction.Animated)
-        }
+        console.log("Playing book " + model.id)
+        var playerPage = Qt.resolvedUrl("PlayerPage.qml")
+        var book = itdao.getFile(model.id);
+        console.log(book)
+//        if (!pageStack.contains(playerPage)) {
+            pageStack.push(playerPage, {book: book})
+//        } else {
+//            pageStack.navigateForward(PageStackAction.Animated)
+//        }
     }
 
     Row {

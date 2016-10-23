@@ -5,7 +5,7 @@ import Sailfish.Media 1.0
 
 Page {
     id: player_page
-
+    property var book;
 
     MediaPlayerControlsPanel {
         id: audioPlayer

@@ -48,11 +48,11 @@ Page {
         PullDownMenu {
             MenuItem {
                 text: qsTr("Show Player")
-                onClicked: pageStack.push(Qt.resolvedUrl("PlayerPage.qml"))
+                onClicked: pageStack.push(Qt.resolvedUrl("PlayerPage.qml"), {dao: dao})
             }
             MenuItem {
                 text: qsTr("Scan Folder")
-                onClicked: pageStack.push(Qt.resolvedUrl("FolderView.qml"))
+                onClicked: pageStack.push(Qt.resolvedUrl("FolderView.qml"), {dao: dao, listPage: page})
             }
             MenuItem {
                 text: qsTr("Add Book")
@@ -68,7 +68,7 @@ Page {
             id: bookList
         }
 
-        delegate: BookItem { width: parent.width }
+        delegate: BookItem { width: parent.width; property var itdao: dao; property var listPage: page }
     }   //+ ListView
 
     function populateBookList() {

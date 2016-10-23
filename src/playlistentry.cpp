@@ -3,6 +3,7 @@
 #include <QStandardPaths>
 #include <string.h>
 #include <QDir>
+#include <QDirIterator>
 #include <QtMultimedia/QMediaPlayer>
 
 PlaylistEntry::PlaylistEntry(QObject *parent) : QObject(parent)

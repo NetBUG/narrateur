@@ -6,10 +6,8 @@ import "../service"
 
 Dialog {
   id: folderView
-
-  Dao {
-      id: dao
-  }
+  property var dao;
+  property var listPage;
 
   PlaylistEntry {
       id: bookEntry
@@ -52,9 +50,10 @@ Dialog {
        //~ checking the folder for being a book itself
        var im = bookEntry.coverImagePath
        var m = bookEntry.playFiles
+ //      console.log("Cover: " + im + ', music: ' + m)
        var outpath = path
        var bn = bookEntry.name
-       console.log("Cover: " + im + ', music: ' + m)
+ //      console.log("BOOKNAME: " + bn)
        if (im.length > 0 && m.length > 0)
            dao.addBook(bn, outpath, im, bookEntry.playText, bookEntry.totalLength, m)
        if (im.length < 1 && m.length > 0) {
@@ -62,9 +61,13 @@ Dialog {
                bookEntry.dataDir = m[i];
                im = bookEntry.coverImagePath
                m = bookEntry.playFiles
-               console.log("Subdir: Cover: " + im + ', music: ' + m)
+               bn = bookEntry.name
+               dao.addBook(bn, outpath, im, bookEntry.playText, bookEntry.totalLength, m)
+//               console.log("Subdir: Cover: " + im + ', music: ' + m)
            }
        }
+       listPage.update()
+       listPage.populateBookList()
    }
 }
 

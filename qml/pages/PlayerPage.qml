@@ -1,35 +1,39 @@
 import QtQuick 2.2
 import Sailfish.Silica 1.0
 import QtMultimedia 5.0
+import Sailfish.Media 1.0
 
 Page {
     id: player_page
-    MediaPlayer {
-        id: player
-        source: "/home/nemo/Videos/Default/Sailfish_OS_2.0.mp4"
-        //source: "http://192.168.1.20:41020/Sailfish_OS_2.0.mp4"
-    }
-    VideoOutput {
-        anchors.fill: parent
-        source: player
-    }
-    Label {
-        id: invitationLabel
-        z: 1
-        anchors.centerIn: parent
-        text: "Коснитесь для начала воспроизведения"
-    }
-    MouseArea {
-        id: playArea
-        anchors.fill: parent
-        onPressed: {
-            if (player.playbackState == MediaPlayer.PlayingState) {
-                invitationLabel.visible = true
-                player.pause();
-            } else {
-                invitationLabel.visible = false
-                player.play();
-            }
+
+
+    MediaPlayerControlsPanel {
+        id: audioPlayer
+        active: true
+        open: true
+        playing: player.isPlaying
+        author: player.author
+        title: player.title
+        duration: player.duration
+        position: player.position / 1000
+
+        onPlayPauseClicked: {
+            if (playing) player.pause()
+            else player.play()
+        }
+        onPreviousClicked: if (player.currentIndex > 0) player.prev()
+        onNextClicked: if (player.currentIndex < player.size-1) player.next()
+        onSliderReleased: player.seekTo(value)
+        onRepeatClicked: {
+            player.repeat = !player.repeat
+            repeat = player.repeat ? MediaPlayerControls.RepeatTrack :
+                                     MediaPlayerControls.NoRepeat
+        }
+        onShuffleClicked: {
+            player.shuffle = !player.shuffle
+            shuffle = player.shuffle ? MediaPlayerControls.ShuffleTracks :
+                                       MediaPlayerControls.NoShuffle
         }
     }
 }
+

@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QString>
+#include <QVariantMap>
 
 /**
  * @brief The PLAYLISTENTRY class provides information about
@@ -14,6 +15,8 @@ class PlaylistEntry : public QObject
 
     Q_PROPERTY(QVariantList playFiles READ getPlayFiles NOTIFY playFilesChanged)
     Q_PROPERTY(QString coverImagePath READ coverImagePath WRITE setCoverImage NOTIFY coverImageChanged)
+    Q_PROPERTY(QString name READ getName)
+    Q_PROPERTY(int totalLength READ getLength)
     Q_PROPERTY(QString playText READ getPlayText WRITE setPlayText NOTIFY playTextChanged)
     Q_PROPERTY(int posFile READ posFile WRITE setPosFile NOTIFY posFileChanged)
     Q_PROPERTY(int posTime READ posTime WRITE setTimFile NOTIFY posTimeChanged)
@@ -24,9 +27,11 @@ public:
     explicit PlaylistEntry(QObject *parent = 0);
     QString cacheDir();
     QString dataDir();
-    QVariantList getPlayFiles();
+    const QVariantList& getPlayFiles();
     QString coverImagePath();
     QString getPlayText();
+    QString getName();
+    int getLength();
     int posFile();
     int posTime();
 
@@ -53,6 +58,8 @@ private:
     QVariantList playFiles;
     int pos_file;
     int pos_time;
+    int total_length;
+    QVariantList scanMusic(QString path);
 };
 
 #endif // PLAYLISTENTRY_H

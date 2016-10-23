@@ -24,16 +24,30 @@ Item {
         });
     }
 
-    function addBook(bookName, bookDir) {
-        //~ TODO: load in C++ code?
-        var coverImage = ""
-        var playText = ""
-        var length = 0
+    function addBook(bookName, bookDir, coverImage, playText, length, files) {
         database.transaction(function(tx) {
             tx.executeSql("INSERT INTO BooksDatabase(bookName, coverImage,
             playText, bookDir, duration) VALUES(?)", [bookName, coverImage,
             playText, length]);
         });
+        database.readTransaction(function(tx) {
+            var result = tx.executeSql("SELECT * FROM BooksDatabase WHERE bookDir = '" + "';")
+            var id = result.rows.item(0).id;
+            tx.executeSql("INSERT INTO BooksPositions(book_id, file_pos, time_pos) VALUES(?)", [id, -1, 0]);
+            for (var i in files) {
+                tx.executeSql("INSERT INTO FilesDatabase(book_id, path) VALUES(?)", [id, files[i]]);
+            }
+        });
+    }
+
+    //+ @brief returns current file according to list
+    function getCurrentFile(id) {
+
+    }
+
+    //+ @brief returns next file according to list
+    function getNextFile(id) {
+
     }
 
     function updateBookName(id, str) {

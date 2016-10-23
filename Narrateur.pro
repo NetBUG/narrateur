@@ -14,6 +14,9 @@ TARGET = Narrateur
 
 CONFIG += sailfishapp
 
+QT += multimedia \
+        dbus
+
 SOURCES += src/Narrateur.cpp \
     src/playlistentry.cpp
 

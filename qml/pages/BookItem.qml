@@ -37,10 +37,9 @@ ListItem {
     onClicked: {
         console.log("Playing book " + model.id)
         var playerPage = Qt.resolvedUrl("PlayerPage.qml")
-        var book = itdao.getFile(model.id);
         console.log(book)
 //        if (!pageStack.contains(playerPage)) {
-            pageStack.push(playerPage, {book: book})
+            pageStack.push(playerPage, {dao: itdao, bookid: model.id})
 //        } else {
 //            pageStack.navigateForward(PageStackAction.Animated)
 //        }

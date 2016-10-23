@@ -57,6 +57,7 @@ Item {
                 timepos = result.rows.item(0).time_pos;
             }
         });
+        var prevFile = ""
         var curFile = ""
         var nextFile = ""
         database.readTransaction(function(tx) {
@@ -76,7 +77,10 @@ Item {
             }
         });
         if (timepos < 0) timepos = 0
-        return [curFile, nextFile, timepos]
+        return [prevFile, curFile, nextFile, timepos]
+    }
+    function updateFile(id, curFile, position) {
+        //~ TODO
     }
 
     function updateBookName(id, str) {
